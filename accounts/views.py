@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 from .models import CustomUser
 from rest_framework.permissions import IsAuthenticated
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
 
 @api_view(['POST'])
 def register_user(request):
@@ -52,9 +54,8 @@ def user_logout(request):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-# views.py
-from django.middleware.csrf import get_token
-from django.http import JsonResponse
+
 
 def csrf_token(request):
     return JsonResponse({'csrfToken': get_token(request)})
+
